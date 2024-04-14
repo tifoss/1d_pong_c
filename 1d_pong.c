@@ -18,6 +18,8 @@
 #define MAX_SPEED 5
 #define HIT_SLEEP 500
 
+#define LARGE
+
 volatile int button_pressed = 0;
 volatile int p1_button_pressed = 0;
 volatile int p2_button_pressed = 0;
@@ -148,6 +150,16 @@ void update_buttons(int player) {
 }
 
 void draw_field(bool bad_ball) {
+#ifdef LARGE
+    int32_t color_p1 = urgb_u32(255, 255, 0);
+    int32_t color_p2 = urgb_u32(0, 0, 255);
+    int32_t background = urgb_u32(50, 0, 0);
+#else
+    int32_t color_p1 = urgb_u32(0, 255, 0)
+    int32_t color_p2 = urgb_u32(255, 0, 0);
+    int32_t background = urgb_u32(0, 0, 50);
+#endif
+
     int mid = (NUM_PIXELS / 2) - 1;
     int p1_score_min = mid - p1_score;
     int p2_score_max = mid + p2_score;
@@ -163,12 +175,12 @@ void draw_field(bool bad_ball) {
 
 
         if(i <= mid && i > p1_score_min) {
-            put_pixel(urgb_u32(0, 100, 0));
+            put_pixel(color_p1);
             continue;
         }
 
         if(i > mid && i <= p2_score_max) {
-            put_pixel(urgb_u32(100, 0, 0));
+            put_pixel(color_p2);
             continue;
         }
 
@@ -182,7 +194,7 @@ void draw_field(bool bad_ball) {
             continue;
         }
 
-        put_pixel(urgb_u32(0, 0, 50));
+        put_pixel(background);
     }
 }
 
