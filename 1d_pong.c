@@ -18,7 +18,7 @@
 #define MAX_SPEED 5
 #define HIT_SLEEP 500
 
-#define LARGE
+// #define LARGE
 
 volatile int button_pressed = 0;
 volatile int p1_button_pressed = 0;
@@ -155,7 +155,7 @@ void draw_field(bool bad_ball) {
     int32_t color_p2 = urgb_u32(0, 0, 255);
     int32_t background = urgb_u32(50, 0, 0);
 #else
-    int32_t color_p1 = urgb_u32(0, 255, 0)
+    int32_t color_p1 = urgb_u32(0, 255, 0);
     int32_t color_p2 = urgb_u32(255, 0, 0);
     int32_t background = urgb_u32(0, 0, 50);
 #endif
@@ -209,7 +209,7 @@ void wait_for_fire() {
     ball = (player == 1) ? 0 : (NUM_PIXELS - 1);
     draw_field(false);
 
-    update_buttons((player == 1) ? 1 : 1);
+    update_buttons((player == 1) ? 2 : 1);
     clear_buttons();
 
     volatile int *button = (player == 1) ? &p1_button_pressed : &p2_button_pressed;
@@ -217,6 +217,7 @@ void wait_for_fire() {
         sleep_ms(DEFAULT_SPEED);
     }
     printf("Player fired.\n");
+    update_buttons(player);
     clear_buttons();
 }
 
