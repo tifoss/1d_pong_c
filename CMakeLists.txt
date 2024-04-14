@@ -24,7 +24,7 @@ project(1d_pong C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-add_executable(1d_pong 1d_pong.c )
+add_executable(1d_pong 1d_pong.c ws2812/animations.c)
 
 pico_set_program_name(1d_pong "1d_pong")
 pico_set_program_version(1d_pong "0.1")
