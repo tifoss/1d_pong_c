@@ -24,7 +24,6 @@ project(1d_pong C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
 add_executable(1d_pong 1d_pong.c )
 
 pico_set_program_name(1d_pong "1d_pong")
@@ -32,6 +31,13 @@ pico_set_program_version(1d_pong "0.1")
 
 pico_enable_stdio_uart(1d_pong 1)
 pico_enable_stdio_usb(1d_pong 0)
+
+
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/ws2812/generated)
+
+# generate the header file into the source tree as it is included in the RP2040 datasheet
+pico_generate_pio_header(1d_pong ${CMAKE_CURRENT_LIST_DIR}/ws2812/ws2812.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/ws2812/generated)
+
 
 # Add the standard library to the build
 target_link_libraries(1d_pong
@@ -44,16 +50,7 @@ target_include_directories(1d_pong PRIVATE
 )
 
 # Add any user requested libraries
-target_link_libraries(1d_pong 
-        hardware_spi
-        hardware_i2c
-        hardware_dma
-        hardware_pio
-        hardware_interp
-        hardware_timer
-        hardware_watchdog
-        hardware_clocks
-        )
+target_link_libraries(1d_pong pico_stdlib hardware_pio)
 
 pico_add_extra_outputs(1d_pong)
 
